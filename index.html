@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MIPRES → MANTIS | Control de entregas</title>
+<style>
+:root{--navy:#17384f;--teal:#087f78;--ink:#1d2b38;--muted:#71808d;--line:#d6dfe6;--bg:#f1f5f8;--green:#91f39b;--orange:#ffa17d;--sky:#82d0eb;--purple:#bf51cf;--red:#ff6464}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:13px Arial,Helvetica,sans-serif}
+header{background:var(--navy);color:#fff;padding:13px max(16px,calc((100% - 1500px)/2));display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:38px;height:38px;border-radius:10px;background:#ffffff20;display:grid;place-items:center;font-size:21px}.brand b{font-size:16px}.brand small{display:block;color:#cad9e2;font-size:10px;margin-top:3px}
+button{border:0;border-radius:6px;padding:9px 12px;font-size:11px;font-weight:bold;cursor:pointer}button:hover{filter:brightness(.96);transform:translateY(-1px)}.white{background:#fff;color:#17384f}.blue{background:#1765b4;color:#fff}.green{background:#087f78;color:#fff}.gray{background:#e8edf1;color:#405869}.purple{background:var(--purple);color:#fff}
+main{max-width:1500px;margin:20px auto;padding:0 14px 34px}.intro{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:14px}.intro h1{font-size:22px;color:var(--navy);margin:0}.intro p{font-size:11px;color:var(--muted);margin:5px 0 0}.badge{font-size:10px;background:#e8f6ef;color:#178052;padding:6px 9px;border-radius:18px;font-weight:bold;white-space:nowrap}
+.section{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:16px 2px 8px}.section h2{font-size:15px;color:var(--navy);margin:0}.section span{font-size:10px;color:var(--muted)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden;box-shadow:0 5px 20px #17384f0b}
+.scroll{overflow-x:auto}.prescription{width:100%;min-width:1060px;border-collapse:collapse;table-layout:fixed}.prescription th,.prescription td{border:1px solid #222;padding:6px;vertical-align:top;text-align:left}.prescription th{background:#f7f8f9;height:45px;font-size:10px;font-weight:600}.prescription td{height:125px}.prescription input,.prescription select,.prescription textarea{width:100%;border:0;border-bottom:1px solid #d9e0e5;border-radius:0;background:transparent;padding:5px 3px;font:11px Arial;color:#1d2b38;min-width:0;outline:none}.prescription textarea{height:108px;resize:vertical;line-height:1.35}.prescription input:focus,.prescription textarea:focus,.prescription select:focus{background:#fffde8;border-bottom:2px solid #3885b7}.freq{display:flex;align-items:center;gap:3px}.freq input{width:44px}.freq select{width:70px}.hint{font-size:9px;color:#667887;margin-top:5px;line-height:1.3}
+.summary{padding:10px 13px;background:#f4f9fc;border-top:1px solid #e0e8ed;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.mathline{color:#596f80;font-size:11px}.mathline b{color:#173e58}.metrics{display:flex;gap:15px;flex-wrap:wrap}.metric{border-left:1px solid #d9e2e8;padding-left:13px}.metric span{display:block;color:#81909b;font-size:9px}.metric strong{display:block;color:#087b70;font-size:16px;margin-top:2px}
+.panel-mantis{padding:12px 0 0}.preauth{display:flex;align-items:center;justify-content:center;gap:10px;padding:3px 10px 14px}.preauth label{font-weight:bold;font-size:12px}.preauth input{width:230px;height:26px;border:1px solid #cbd3d9;border-radius:5px;padding:4px 7px;font:12px Arial}
+.cyclebar{margin:0 12px 15px;padding:11px 13px;border:1px solid #cfe0eb;border-radius:8px;background:linear-gradient(100deg,#f0f7fc,#f1faf8);display:flex;align-items:center;justify-content:space-between;gap:13px;flex-wrap:wrap}.cycle-fields{display:flex;gap:10px;align-items:end;flex-wrap:wrap}.cycle-field label{display:block;font-size:10px;font-weight:bold;color:#4b6172;margin-bottom:4px}.cycle-field input,.cycle-field select{height:29px;border:1px solid #cbd8e1;border-radius:5px;padding:4px 7px;font-size:11px;background:#fff}.cycle-field input[type=number]{width:75px}.cycle-field.id input{width:150px}.cycle-field.date input{width:145px}.cycle-display{font-size:11px;text-align:right;color:#486273}.cycle-display strong{display:block;color:#126d72;font-size:16px;margin-top:3px}
+.mantis-scroll{overflow-x:auto;padding:0 8px 4px}.mantis-screen{min-width:1320px}.mh,.mr{display:grid;grid-template-columns:105px 94px minmax(165px,1.55fr) 57px 78px 88px 91px 83px 96px 101px 83px 69px 69px 152px;column-gap:4px;align-items:end}
+.mh{min-height:34px;padding:0 3px 5px}.mh div{font-size:12px;font-weight:bold;color:#111;white-space:nowrap}.mh .refh{background:var(--green);padding:8px 3px;margin-bottom:-5px}.mh .enth{background:var(--orange);padding:8px 3px;margin-bottom:-5px;text-align:center}.mh .solh{background:var(--sky);padding:8px 3px;margin-bottom:-5px;text-align:center}.mh .reporth{background:var(--purple);padding:8px 3px;margin-bottom:-5px;text-align:center;white-space:normal}
+.mr{min-height:75px;padding:0 3px;align-items:center}.mf{min-width:0}.mf input{width:100%;height:26px;border:1px solid #cbd3d8;border-radius:5px;padding:4px 5px;font:11px Arial;min-width:0;background:#fff}.mf input:focus{outline:2px solid #c5d9e8}.mf .autofill{background:#f3f8fb}.mf.ref input{background:#effff0;border-color:#91e99b;border-radius:0}.mf.ent input{background:#fff5ef;border-color:#ffb392;text-align:center}.mf.sol input{background:#f0fbff;border-color:#9bd9ed;text-align:center}.mf.report{background:#faeaff;padding:4px;min-height:68px;display:flex;align-items:center;gap:4px}.mf.report input{background:#fff;border-color:#dda3e9;text-align:right;font-weight:bold}.mf.report button{background:var(--purple);color:white;padding:7px 8px;white-space:nowrap}.mf.arrow{text-align:center;font-size:21px;color:#555}.mf.stock{text-align:center}.tablefoot{overflow:auto;padding:17px 8px 0}.tablefoot table{min-width:1100px;width:100%;border-collapse:collapse;font-size:10px}.tablefoot th{background:#d4d4d4;color:#fff;text-align:left;padding:7px 6px;white-space:nowrap}.tablefoot td{padding:8px 6px;border-bottom:1px solid #e5e9ec;white-space:nowrap}
+.status{font-size:10px;color:#687c8a;padding:8px 12px;min-height:27px}.notice{margin:8px 12px 12px;padding:10px 11px;border:1px solid #efd9a8;border-radius:6px;background:#fff8e9;color:#775b23;font-size:10px;line-height:1.5}
+@media(max-width:700px){header{align-items:flex-start;flex-direction:column}.intro{align-items:flex-start;flex-direction:column}.prescription{min-width:1100px}.cyclebar{align-items:flex-start}.cycle-display{text-align:left}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">⇄</div><div><b>MIPRES → MANTIS</b><small>Calculadora con control de entregas y ciclos</small></div></div><div style="display:flex;gap:7px;flex-wrap:wrap"><button class="white" id="demo">Cargar ejemplo PROWHEY</button><button class="white" id="reset">Limpiar</button></div></header>
+<main>
+<div class="intro"><div><h1>Calculadora de fórmula nutricional</h1><p>Calcula la prescripción completa y separa automáticamente cada entrega o ciclo para MANTIS.</p></div><span class="badge">SIMULADOR LOCAL · NO OFICIAL</span></div>
+<div class="section"><h2>1. Datos del producto en MIPRES</h2><span>Solo los campos necesarios para el cálculo</span></div>
+<section class="panel">
+ <div class="scroll"><table class="prescription">
+ <colgroup><col style="width:12%"><col style="width:13%"><col style="width:9%"><col style="width:9%"><col style="width:11%"><col style="width:9%"><col style="width:16%"><col style="width:6%"><col style="width:7%"><col style="width:8%"></colgroup>
+ <thead><tr><th>Tipo Producto</th><th>Producto de soporte Nutricional / Forma</th><th>Dosis</th><th>Vía o Forma de Administración</th><th>Frecuencia Administración</th><th>Indicaciones Especiales</th><th>Duración / Indicaciones / Recomendaciones</th><th>Unidad</th><th>Contenido por envase</th><th>Cantidades Farmacéuticas (total)</th></tr></thead>
+ <tbody><tr>
+  <td><textarea id="tipoProducto">PROWHEY TRR POLVO 336 G / LATA</textarea></td>
+  <td><textarea id="forma">ALTA EN PROTEÍNA Y MODIFICADA EN MICRONUTRIENTES PARA NEUTRALIZAR PÉRDIDAS POR DIÁLISIS.</textarea></td>
+  <td><input id="dosis" type="number" min="0" step="any" value="84"><select id="unidadDosis"><option value="gramos">GRAMO(S) - G</option><option value="ml">MILILITRO(S) - ML</option><option value="mg">MILIGRAMO(S) - MG</option><option value="unidades">UNIDAD(ES)</option></select></td>
+  <td><select id="via"><option>ORAL</option><option>SONDA</option><option>OTRA</option></select></td>
+  <td><div class="freq"><span style="font-size:10px">Cada</span><input id="frecuencia" type="number" min=".01" step="any" value="12"><select id="freqType"><option value="horas">horas</option><option value="veces">veces/día</option></select></div><div class="hint" id="freqHint">12 HORAS · 2 administraciones/día</div></td>
+  <td><textarea id="especiales">SIN INDICACIÓN ESPECIAL</textarea></td>
+  <td><div style="display:flex;gap:4px;align-items:center"><input id="days" type="number" min="1" step="1" value="90" style="max-width:60px"><span style="font-size:9px">DÍA(S)</span></div><textarea id="recommendations">CONSUMIR 84 G, DOS VECES AL DÍA DURANTE 90 DÍAS. NO DEBE REEMPLAZAR COMIDAS PRINCIPALES.</textarea></td>
+  <td><input id="packLabel" value="LATA"></td>
+  <td><input id="contentPerUnit" type="number" min="0" step="any" value="336"><div class="hint">Ej. gramos por lata</div></td>
+  <td><input id="totalUnits" type="number" min="0" step="1" value="45"></td>
+ </tr></tbody></table></div>
+ <div class="summary"><div class="mathline" id="math">Operación: 24 ÷ 12 horas = 2 tomas/día; 2 × 84 gramos = 168 gramos/día.</div><div class="metrics"><div class="metric"><span>Dosis diaria exacta</span><strong id="dailyExact">168 gramos</strong></div><div class="metric"><span>Consumo total tratamiento</span><strong id="totalConsumption">15.120 gramos</strong></div><div class="metric"><span>Envases estimados total</span><strong id="estimatedTotalUnits">45 latas</strong></div></div></div>
+</section>
+
+<div class="section"><h2>2. Entregas o ciclos de MIPRES</h2><span>Selecciona cuál entrega estás registrando ahora</span></div>
+<section class="panel" style="padding:12px">
+ <div class="cyclebar">
+  <div class="cycle-fields">
+   <div class="cycle-field"><label for="cycleCount">Entregas programadas en MIPRES</label><input id="cycleCount" type="number" min="1" step="1" value="3"></div>
+   <div class="cycle-field"><label for="currentCycle">Entrega que estás radicando</label><select id="currentCycle"><option value="1">Entrega 1 de 3</option><option value="2">Entrega 2 de 3</option><option value="3">Entrega 3 de 3</option></select></div>
+   <div class="cycle-field id"><label for="cycleId">ID Ciclo de esta entrega</label><input id="cycleId" placeholder="Ingresa el ID del ciclo seleccionado"></div>
+   <div class="cycle-field date"><label for="maxDate">Fecha máxima (opcional)</label><input id="maxDate" type="date"></div>
+  </div>
+  <div class="cycle-display"><span id="cycleBadge">ESTÁS REGISTRANDO</span><strong id="cycleSummary">ENTREGA 1 DE 3 · 15 LATAS</strong><small style="display:block;color:#657c89;font-size:9px;margin-top:3px">El número de entregas debe coincidir con los ciclos MIPRES.</small></div>
+ </div>
+ <div class="summary" style="border:1px solid #e2eaf0;border-radius:7px;margin-bottom:12px">
+  <div class="mathline" id="cycleMath"><b>Distribución:</b> 45 latas ÷ 3 entregas = 15 latas por entrega. Duración: 90 días ÷ 3 = 30 días por entrega.</div>
+  <div class="metrics"><div class="metric"><span>Total MIPRES</span><strong id="totalUnitsLabel">45 latas</strong></div><div class="metric"><span>Duración por entrega</span><strong id="daysPerCycleLabel">30 días</strong></div><div class="metric"><span>Unidades de esta entrega</span><strong id="thisCycleUnitsLabel">15 latas</strong></div><div class="metric"><span>Envases estimados esta entrega</span><strong id="estimatedCycleUnits">15 latas</strong></div></div>
+ </div>
+</section>
+
+<div class="section"><h2>3. Registro de producto en MANTIS</h2><span>La dosis y el periodo corresponden a la entrega seleccionada</span></div>
+<section class="panel panel-mantis">
+ <div class="preauth"><label for="preauth">Numero Pre Autorizacion</label><input id="preauth" placeholder="Número preautorización"></div>
+ <div class="mantis-scroll"><div class="mantis-screen">
+  <div class="mh">
+   <div>Código Artículo</div><div class="refh">Ref Contrato</div><div>Descripción Artículo</div><div>Empaque</div><div>CUM</div><div>Laboratorio</div><div>Dosis (diaria)</div><div>Periodo (días)</div><div style="color:#1555ac">Código Tecnología</div><div>Enviar Aplicado</div><div>Saldo Bodega</div><div class="enth">Can Ent</div><div class="solh">Can Sol</div><div class="reporth">Can Mipres a Reportar</div>
+  </div>
+  <div class="mr">
+   <div class="mf"><input id="articleCode" placeholder="Código"></div><div class="mf ref"><input id="contractRef" placeholder="Referencia"></div><div class="mf"><input id="articleDesc" class="autofill" readonly></div><div class="mf"><input id="packageCount" value="1"></div><div class="mf"><input id="cum" placeholder="CUM"></div><div class="mf"><input id="lab" placeholder="Laboratorio"></div><div class="mf"><input id="dailyMant" class="autofill" readonly></div><div class="mf"><input id="periodMant" class="autofill" readonly></div><div class="mf"><input id="techCode" placeholder="Código"></div><div class="mf arrow">⬆</div><div class="mf stock"><input id="stock" value="0" style="text-align:center"></div><div class="mf ent"><input id="canEnt" type="number" min="0" value="0"></div><div class="mf sol"><input id="canSol" type="number" min="0" value="15"></div><div class="mf report"><input id="canReport" type="number" min="0" value="15"><button id="add">Agregar</button></div>
+  </div>
+ </div></div>
+ <div class="tablefoot"><table><thead><tr><th>Eliminar</th><th>ID</th><th>Entrega / Ciclo</th><th>ID Ciclo</th><th>Ref Contrato</th><th>Código artículo</th><th>Descripción</th><th>Presentación</th><th>Dosis</th><th>Periodo</th><th>Cod. Tecnología</th><th>CUM</th><th>Grupo - Laboratorio</th><th>Cant Ent</th><th>Cant Sol</th><th>Pendiente</th></tr></thead><tbody id="rows"><tr><td colspan="16" style="text-align:center;color:#89949d">Aún no has agregado la entrega.</td></tr></tbody></table></div>
+ <div class="status" id="status">La fila se completa con la cantidad y el periodo de la entrega seleccionada, no con el total de toda la prescripción.</div>
+ <div style="padding:0 12px 10px;display:flex;gap:8px;flex-wrap:wrap"><button class="blue" id="copy">Copiar datos de esta entrega</button><button class="gray" id="clearManual">Limpiar códigos manuales</button></div>
+ <div class="notice"><b>Importante:</b> la distribución automática supone entregas iguales y, cuando hay sobrantes, asigna una unidad adicional a las primeras entregas. Verifica que coincida con el calendario/registro de ciclos de MIPRES. Can Ent es lo recibido realmente; Can Sol y Can MIPRES a reportar se proponen con la cantidad de la entrega seleccionada, pero deben confirmarse según el trámite real. La dosis diaria debe validarse con la unidad que admite MANTIS. El programa es una simulación local y no se conecta a los sistemas oficiales.</div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id),v=id=>($(id).value||'').trim(),num=id=>Number($(id).value),fmt=x=>Number.isFinite(x)?x.toLocaleString('es-CO',{maximumFractionDigits:2}):'—';
+let manualSol=false,manualReport=false,added=0;
+function distribute(total,count,index){if(count<1||total%count!==0)return null;return total/count;}
+function updateCycleOptions(){
+ let count=Math.max(1,Math.floor(num('cycleCount')||1)),old=Math.min(count,Math.max(1,Math.floor(num('currentCycle')||1)));
+ const sel=$('currentCycle');sel.innerHTML='';for(let i=1;i<=count;i++){let o=document.createElement('option');o.value=String(i);o.textContent='Entrega '+i+' de '+count;sel.appendChild(o)}sel.value=String(old);
+}
+function calculate(){
+ const dose=num('dosis'),freq=num('frecuencia'),days=Math.max(0,Math.floor(num('days')||0)),totalUnits=Math.max(0,Math.floor(num('totalUnits')||0)),content=num('contentPerUnit');
+ const count=Math.max(1,Math.floor(num('cycleCount')||1));let cycle=Math.min(count,Math.max(1,Math.floor(num('currentCycle')||1)));
+ if(String(cycle)!==v('currentCycle'))$('currentCycle').value=String(cycle);
+ const byHours=$('freqType').value==='horas',takes=freq>0?(byHours?24/freq:freq):0,daily=dose*takes;
+ const idx=cycle-1,cycleUnits=distribute(totalUnits,count,idx),cycleDays=distribute(days,count,idx);
+ const unit=v('unidadDosis'),plural=unit==='gramos'?'gramos':unit;
+ const totalUse=daily*days,cycleUse=cycleDays===null?null:daily*cycleDays;
+ const estimatedTotal=content>0?Math.ceil(totalUse/content):null;
+ const estimatedCycle=content>0&&cycleUse!==null?Math.ceil(cycleUse/content):null;
+ $('freqHint').textContent=freq>0?(byHours?fmt(freq)+' HORA(S) · '+fmt(takes)+' administraciones/día':fmt(takes)+' VEZ/VECES AL DÍA'):'Ingresa la frecuencia';
+ $('math').innerHTML=daily>0?'<b>Operación:</b> '+(byHours?'24 ÷ '+fmt(freq)+' horas = '+fmt(takes)+' tomas/día':'Frecuencia: '+fmt(takes)+' tomas/día')+'; '+fmt(takes)+' × '+fmt(dose)+' '+unit+' = '+fmt(daily)+' '+plural+'/día.':'Completa dosis y frecuencia para calcular.';
+ $('dailyExact').textContent=daily>0?fmt(daily)+' '+plural:'—';
+ $('totalConsumption').textContent=daily>0?fmt(totalUse)+' '+plural:'—';
+ $('estimatedTotalUnits').textContent=estimatedTotal===null?'Ingresa contenido':fmt(estimatedTotal)+' '+v('packLabel').toLowerCase();
+ $('cycleBadge').textContent='ESTÁS REGISTRANDO';
+ $('cycleSummary').textContent='ENTREGA '+cycle+' DE '+count+' · '+(cycleUnits===null?'CANTIDAD POR CONFIRMAR':cycleUnits+' '+v('packLabel').toUpperCase());
+ const unitsEven=totalUnits%count===0,daysEven=days%count===0;
+ $('cycleMath').innerHTML=unitsEven
+   ? '<b>Distribución:</b> '+totalUnits+' '+v('packLabel').toLowerCase()+' ÷ '+count+' entregas = '+cycleUnits+' por entrega. Duración total: '+days+' días; esta entrega: '+(cycleDays===null?'revisar':cycleDays+' días')+'.'+(estimatedCycle!==null?' Consumo calculado: '+fmt(cycleUse)+' '+plural+' ≈ '+estimatedCycle+' envases.':'')
+   : '<b>ATENCIÓN:</b> '+totalUnits+' '+v('packLabel').toLowerCase()+' no se divide en partes iguales entre '+count+' entregas. Consulta las cantidades exactas de cada ciclo en MIPRES; no se asignará 23/22 automáticamente.';
+ $('totalUnitsLabel').textContent=fmt(totalUnits)+' '+v('packLabel').toLowerCase();
+ $('daysPerCycleLabel').textContent=cycleDays===null?'REVISAR':cycleDays+' días';
+ $('thisCycleUnitsLabel').textContent=cycleUnits===null?'CONFIRMAR':cycleUnits+' '+v('packLabel').toLowerCase();
+ $('estimatedCycleUnits').textContent=estimatedCycle===null?'—':fmt(estimatedCycle)+' '+v('packLabel').toLowerCase();
+ $('articleDesc').value=v('tipoProducto');
+ $('dailyMant').value=daily>0?String(Math.round(daily)):'';
+ $('periodMant').value=cycleDays===null?'':String(cycleDays);
+ if(!manualSol)$('canSol').value=cycleUnits===null?'':String(cycleUnits);
+ if(!manualReport)$('canReport').value=cycleUnits===null?'':String(cycleUnits);
+ const warning=(!unitsEven||!daysEven)
+   ? ' ADVERTENCIA: la división no es exacta. Consulta la cantidad/duración de este ciclo directamente en MIPRES y diligénciala manualmente.'
+   : '';
+ $('status').textContent='Entrega '+cycle+' de '+count+' · ID Ciclo: '+(v('cycleId')||'sin ingresar')+' · '+(cycleUnits===null?'Can Sol y Can MIPRES quedan pendientes de confirmar.':'MANTIS sugerido: '+cycleUnits+' unidades y '+cycleDays+' días.')+warning;
+}
+['tipoProducto','dosis','unidadDosis','frecuencia','freqType','days','totalUnits','packLabel','contentPerUnit','cycleCount'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='cycleCount'){updateCycleOptions();$('cycleId').value='';$('maxDate').value=''}manualSol=false;manualReport=false;calculate()}));
+['freqType','unidadDosis'].forEach(id=>$(id).addEventListener('change',()=>{manualSol=false;manualReport=false;calculate()}));
+$('currentCycle').addEventListener('change',()=>{$('cycleId').value='';$('maxDate').value='';manualSol=false;manualReport=false;calculate()});
+$('canSol').addEventListener('input',()=>manualSol=true);$('canReport').addEventListener('input',()=>manualReport=true);
+['cycleId','maxDate'].forEach(id=>$(id).addEventListener('input',calculate));
+function loadExample(){
+ $('tipoProducto').value='PROWHEY TRR POLVO 336 G / LATA';$('forma').value='ALTA EN PROTEÍNA Y MODIFICADA EN MICRONUTRIENTES PARA NEUTRALIZAR PÉRDIDAS POR DIÁLISIS.';
+ $('dosis').value='84';$('unidadDosis').value='gramos';$('via').value='ORAL';$('frecuencia').value='12';$('freqType').value='horas';$('especiales').value='SIN INDICACIÓN ESPECIAL';$('days').value='90';$('recommendations').value='CONSUMIR 84 G, DOS VECES AL DÍA DURANTE 90 DÍAS. NO DEBE REEMPLAZAR COMIDAS PRINCIPALES.';$('packLabel').value='LATA';$('contentPerUnit').value='336';$('totalUnits').value='45';
+ $('cycleCount').value='3';updateCycleOptions();$('currentCycle').value='1';$('cycleId').value='114907706';$('maxDate').value='';
+ $('preauth').value='';$('articleCode').value='M006065';$('contractRef').value='MD017743';$('packageCount').value='1';$('cum').value='20194071';$('lab').value='NUTRICIA';$('techCode').value='140904';$('stock').value='0';$('canEnt').value='0';manualSol=false;manualReport=false;calculate();
+}
+function resetAll(){
+ ['tipoProducto','forma','dosis','frecuencia','days','recommendations','totalUnits','packLabel','contentPerUnit','cycleId','maxDate','preauth','articleCode','contractRef','packageCount','cum','lab','techCode','canEnt'].forEach(id=>$(id).value='');
+ $('unidadDosis').selectedIndex=0;$('via').selectedIndex=0;$('freqType').selectedIndex=0;$('especiales').value='';$('cycleCount').value='1';updateCycleOptions();$('currentCycle').value='1';$('canSol').value='0';$('canReport').value='0';$('rows').innerHTML='<tr><td colspan="16" style="text-align:center;color:#89949d">Aún no has agregado la entrega.</td></tr>';added=0;manualSol=false;manualReport=false;calculate();
+}
+$('demo').addEventListener('click',loadExample);$('reset').addEventListener('click',resetAll);
+$('clearManual').addEventListener('click',()=>{['articleCode','contractRef','packageCount','cum','lab','techCode'].forEach(id=>$(id).value='');$('status').textContent='Se limpiaron los códigos y datos manuales del artículo.'});
+$('add').addEventListener('click',()=>{
+ if(!v('articleDesc')){alert('Completa el producto MIPRES.');return}
+ if(!v('canSol')||!v('periodMant')){alert('La cantidad o duración de este ciclo no se puede repartir en partes iguales. Consulta el detalle del ciclo en MIPRES y confirma manualmente los valores antes de agregar.');return}
+ if(added===0)$('rows').innerHTML='';added++;
+ const vals=[added,'ENTREGA '+v('currentCycle')+'/'+v('cycleCount'),v('cycleId'),v('contractRef'),v('articleCode'),v('articleDesc'),v('packLabel'),v('dailyMant'),v('periodMant'),v('techCode'),v('cum'),v('lab'),v('canEnt'),v('canSol'),String(Math.max(0,num('canSol')-num('canEnt')))];
+ const tr=document.createElement('tr');const del=document.createElement('td'),btn=document.createElement('button');btn.textContent='✖';btn.className='gray';btn.onclick=()=>tr.remove();del.appendChild(btn);tr.appendChild(del);vals.forEach(x=>{let td=document.createElement('td');td.textContent=x;tr.appendChild(td)});$('rows').appendChild(tr);
+ $('status').textContent='Entrega '+v('currentCycle')+' de '+v('cycleCount')+' agregada a la tabla local. No se ha enviado a MANTIS.';
+});
+$('copy').addEventListener('click',()=>{
+ const t=`ENTREGA: ${v('currentCycle')} DE ${v('cycleCount')}\nID CICLO: ${v('cycleId')}\nPRODUCTO: ${v('articleDesc')}\nDOSIS DIARIA: ${v('dailyMant')}\nPERIODO DE ESTA ENTREGA: ${v('periodMant')} días\nCAN ENT: ${v('canEnt')}\nCAN SOL: ${v('canSol')}\nCAN MIPRES A REPORTAR: ${v('canReport')}\nTOTAL PRESCRITO EN MIPRES: ${v('totalUnits')}`;
+ if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>$('status').textContent='Resumen de esta entrega copiado.').catch(()=>$('status').textContent='No se pudo copiar automáticamente.');
+ else $('status').textContent=t;
+});
+loadExample();
+</script>
+</body></html>
